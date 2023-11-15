@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="FATAL">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%maxLen{%highlight{%d{HH:mm:ss:SS} [%thread] %-5level %class{1}.%method - %msg}}{240}%n"/>
+        </Console>
+        <File name="File" fileName="test-output/logs/app.log">
+            <PatternLayout pattern="%maxLen{%highlight{%d{HH:mm:ss:SS} [%thread] %-5level %class{1}.%method - %msg}}{240}%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="Console" level="info"/>
+            <AppenderRef ref="File" />
+        </Root>
+    </Loggers>
+</Configuration>
