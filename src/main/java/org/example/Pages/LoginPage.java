@@ -39,9 +39,9 @@ public class LoginPage {
         passwordInput.sendKeys(password);
         return this;
     }
-    public HomePage clickLogin(){
+    public DashboardPage clickLogin(){
         log.info("Clicking on login button");
         loginBotton.click();
-        return new HomePage(driver);
+        return new DashboardPage(driver);
     }
 }

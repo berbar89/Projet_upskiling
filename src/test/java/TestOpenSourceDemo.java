@@ -3,13 +3,13 @@ import org.example.Pages.LoginPage;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 @Log4j2
 public class TestOpenSourceDemo {
     WebDriver driver;
+    String username = "admin";
+    String password = "admin123";
     public static final String URL = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
 
     @BeforeMethod
@@ -21,17 +21,35 @@ public class TestOpenSourceDemo {
     }
 
     @Test
-    public void testOpensourcedemo() {
-        String username = "admin";
-        String password = "admin123";
+    public void creationApim() {
+
         LoginPage lp = new LoginPage(driver);
         lp.inputUserName(username)
                 .inputPassword(password)
-                .clickLogin();
+                .clickLogin()
+                .gotoPIM()
+                .clickAddButton()
+                .inputFirstName("Nassima")
+                .inputMiddleName("Nass")
+                .inputLastName("AAA")
+                .clickCreateLoginDetails()
+                .inputNewUsername("Ayden.ikken")
+                .inputNPassword("Aydennnn1")
+                .inputconfirmPassword("Aydennnn1")
+                .createUser();
 
 
     }
+    @Test
+    public void createAdmin(){
+        LoginPage lp = new LoginPage(driver);
+        lp.inputUserName(username)
+                .inputPassword(password)
+                .clickLogin()
+                .goToAdmin();
 
+
+    }
     @AfterMethod
     public void Teardown() {
         log.info("Finishing test");
