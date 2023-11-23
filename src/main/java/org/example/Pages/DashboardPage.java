@@ -16,7 +16,7 @@ public class DashboardPage {
     WebDriverWait wait;
     @FindBy(css="a[href*='viewPimModule']")
     WebElement linkPim;
-    @FindBy(xpath = "//span[text()='Admin']")
+    @FindBy(css="a[href*='viewPimModule']")
     WebElement adminButton;
 
     public DashboardPage(WebDriver driver){

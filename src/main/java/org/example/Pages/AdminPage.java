@@ -13,7 +13,7 @@ import java.time.Duration;
 public class AdminPage {
     WebDriver driver;
     WebDriverWait wait;
-    @FindBy(xpath = ("//button[@class='oxd-button oxd-button--medium oxd-button--secondary'])[1]"))
+    @FindBy(xpath = "(//button[@class='oxd-button oxd-button--medium oxd-button--secondary'])[1]")
     WebElement AddButtonAdmin;
     public AdminPage(WebDriver driver){
         this.driver=driver;

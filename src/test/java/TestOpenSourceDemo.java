@@ -46,7 +46,8 @@ public class TestOpenSourceDemo {
         lp.inputUserName(username)
                 .inputPassword(password)
                 .clickLogin()
-                .goToAdmin();
+                .goToAdmin()
+                .clickAddButtonAdmin();
 
 
     }
