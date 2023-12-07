@@ -22,7 +22,7 @@ public class TestOpenSourceDemo {
         log.info("Navigated to the URL: https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
         driver.get(URL);
     }
-    /*@Test
+    @Test
    public void testCreationApim() {
 
         LoginPage lp = new LoginPage(driver);
@@ -35,13 +35,13 @@ public class TestOpenSourceDemo {
                 .inputMiddleName("Nas")
                 .inputLastName("AAAkk")
                 .clickCreateLoginDetails()
-                .inputNewUsername(usernameA)
+                .inputNewUsername("ikk.nassima")
                 .inputNPassword("Aydennnn1n")
                 .inputconfirmPassword("Aydennnn1n")
                 .createUser();
 
 
-    }*/
+    }
 
       @Test
       public void testCreateAdmin(){
@@ -58,7 +58,7 @@ public class TestOpenSourceDemo {
 
 
       }
-   /* @Test
+   @Test
     public void testRemplirFormulaire() {
         LoginPage lp = new LoginPage(driver);
         lp.inputUserName(username)
@@ -87,12 +87,12 @@ public class TestOpenSourceDemo {
                 .inputPassword(password)
                 .clickLogin()
                 .doToTime();
-    }*/
+    }
 
-  /*  @AfterMethod
+   @AfterMethod
     public void Teardown() {
         log.info("Finishing test");
         driver.quit();
-    }*/
+    }
 
 }
