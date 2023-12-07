@@ -1,6 +1,8 @@
 package org.example.Pages;
 
 import lombok.extern.log4j.Log4j2;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -37,7 +39,7 @@ public class PimPage {
     public PimPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
     public PimPage clickAddButton() {
@@ -69,9 +71,12 @@ public class PimPage {
     }
 
     public PimPage clickCreateLoginDetails() {
-        wait.until(ExpectedConditions.visibilityOfAllElements(CreateLoginDetailsButton));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".oxd-switch-input--active")));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("oxd-form-loader")));
+        wait.until(ExpectedConditions.elementToBeClickable(CreateLoginDetailsButton));
         log.info("click on the Create Login Details button");
         CreateLoginDetailsButton.click();
+
         return this;
     }
 
@@ -96,11 +101,17 @@ public class PimPage {
         return this;
     }
 
-    public PimPage createUser() {
+    public PersonnalDetails createUser() {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("oxd-form-loader")));
         wait.until(ExpectedConditions.visibilityOfAllElements(saveButton));
         log.info("click on the save button");
         saveButton.click();
-        return this;
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return new PersonnalDetails(driver);
     }
 
 

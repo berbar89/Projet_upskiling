@@ -16,9 +16,10 @@ public class DashboardPage {
     WebDriverWait wait;
     @FindBy(css="a[href*='viewPimModule']")
     WebElement linkPim;
-    @FindBy(css="a[href*='viewPimModule']")
+    @FindBy(css="a[href*='viewAdminModule']")
     WebElement adminButton;
-
+    @FindBy(css="a[href*='viewTimeModule']")
+    WebElement TimeButton;
     public DashboardPage(WebDriver driver){
         this.driver= driver;
         PageFactory.initElements(driver, this);
@@ -37,5 +38,11 @@ public class DashboardPage {
         log.info("click on the Admin Button");
         adminButton.click();
         return new AdminPage(driver);
+    }
+    public TimePage doToTime(){
+        wait.until(ExpectedConditions.visibilityOfAllElements(TimeButton));
+        log.info("click on the Time Button");
+        TimeButton.click();
+        return new TimePage(driver);
     }
 }
