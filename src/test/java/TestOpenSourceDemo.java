@@ -22,8 +22,9 @@ public class TestOpenSourceDemo {
         log.info("Navigated to the URL: https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
         driver.get(URL);
     }
+
     @Test
-   public void testCreationApim() {
+    public void testCreationApim() {
 
         LoginPage lp = new LoginPage(driver);
         lp.inputUserName(username)
@@ -43,22 +44,23 @@ public class TestOpenSourceDemo {
 
     }
 
-      @Test
-      public void testCreateAdmin(){
-          LoginPage lp = new LoginPage(driver);
-          lp.inputUserName(username)
-                  .inputPassword(password)
-                  .clickLogin()
-                  .goToAdmin()
-                  .searchEmployee()
-                  .ModifyEmployee()
-                  .selectAdminOption()
-                  .clickSaveButtom()
-                  .logout();
+    @Test
+    public void testCreateAdmin() {
+        LoginPage lp = new LoginPage(driver);
+        lp.inputUserName(username)
+                .inputPassword(password)
+                .clickLogin()
+                .goToAdmin()
+                .searchEmployee()
+                .ModifyEmployee()
+                .selectAdminOption()
+                .clickSaveButtom()
+                .logout();
 
 
-      }
-   @Test
+    }
+
+    @Test
     public void testRemplirFormulaire() {
         LoginPage lp = new LoginPage(driver);
         lp.inputUserName(username)
@@ -80,8 +82,9 @@ public class TestOpenSourceDemo {
                 .refrechPage();
 
     }
+
     @Test
-    public void testFeuilleTempProjet(){
+    public void testFeuilleTempProjet() {
         LoginPage lp = new LoginPage(driver);
         lp.inputUserName(username)
                 .inputPassword(password)
@@ -89,7 +92,7 @@ public class TestOpenSourceDemo {
                 .doToTime();
     }
 
-   @AfterMethod
+    @AfterMethod
     public void Teardown() {
         log.info("Finishing test");
         driver.quit();
