@@ -26,8 +26,10 @@ public class AdminPage {
     WebElement dropdown;
     @FindBy(xpath = "//button[@class='oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space']")
     WebElement saveButtom;
-    @FindBy(className = "orangehrm-left-space")
+    @FindBy(css = ".oxd-userdropdown-icon")
     WebElement profilButtom;
+    @FindBy(css="a[href*='logout']")
+    WebElement logout;
     public AdminPage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -69,13 +71,25 @@ public class AdminPage {
         wait.until(ExpectedConditions.visibilityOf(saveButtom));
         log.info("Clicked on the 'Save' button");
         saveButtom.click();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return this;
     }
 
-    public LoginPage logout(){
+    public AdminPage clickProfil(){
         wait.until(ExpectedConditions.visibilityOf(profilButtom));
         log.info("click on profil buttom");
         profilButtom.click();
+        return this;
+
+    }
+    public LoginPage logout(){
+        wait.until(ExpectedConditions.visibilityOf(logout));
+        log.info("click on logout buttom");
+        logout.click();
         return new LoginPage(driver);
 
     }
