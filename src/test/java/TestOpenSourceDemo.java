@@ -25,7 +25,7 @@ public class TestOpenSourceDemo {
         driver.get(URL);
     }
 
-   /* @Test
+   @Test
     private void testCreationApim() {
         LoginPage lp = new LoginPage(driver);
         lp.inputUserName(username)
@@ -43,10 +43,9 @@ public class TestOpenSourceDemo {
                 .createUser();
 
 
-    }*/
+    }
 
-    @Test
-            //(dependsOnMethods = "testCreationApim")
+    @Test//(dependsOnMethods = "testCreationApim")
     public void testCreateAdmin() {
         LoginPage lp = new LoginPage(driver);
         lp.inputUserName(username)
@@ -66,7 +65,7 @@ public class TestOpenSourceDemo {
 
     }
 
-   /* @Test
+   @Test
     public void testRemplirFormulaire() {
         LoginPage lp = new LoginPage(driver);
         lp.inputUserName(username)
@@ -102,6 +101,6 @@ public class TestOpenSourceDemo {
     public void Teardown() {
         log.info("Finishing test");
         driver.quit();
-    }*/
+    }
 
 }
