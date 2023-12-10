@@ -64,8 +64,10 @@ public class PersonnalDetails {
 
     public PersonnalDetails selectBlood() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight / 3)");
+       // js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("oxd-form-loader")));
+
         wait.until(ExpectedConditions.elementToBeClickable(blood));
         log.info("Select Blood");
         blood.click();
