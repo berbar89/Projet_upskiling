@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.time.Duration;
 import java.util.List;
@@ -21,14 +22,20 @@ public class PersonnalDetails {
     WebDriverWait wait;
     @FindBy(xpath = "//label[text()='Date of Birth']/ancestor::div[@data-v-957b4417]/div/div/div/input")
     WebElement birthday;
-    @FindBy(xpath = "//label[text()='Male']")
-    WebElement genre;
+    @FindBy(css ="input[type=\"radio\"][value=\"1\"]~span")
+    WebElement genreMale;
+
+    @FindBy(css ="input[type=\"radio\"][value=\"1\"]")
+    WebElement genreMaleselect;
     @FindBy(xpath = "//label[text()='Blood Type']/ancestor::div[@data-v-957b4417]/div/div/div/div")
     WebElement blood;
     @FindBy(css = "div.oxd-select-dropdown")
     WebElement dropdownOptions;
-    @FindBy(css="div button.oxd-button[data-v-b6d78ace]")
+    @FindBy(css = "div button.oxd-button[data-v-b6d78ace]")
     WebElement saveInfo;
+    @FindBy(css=".oxd-button--secondary:nth-child(1)")
+    WebElement saveBloodButton;
+
 
     public PersonnalDetails(WebDriver driver) {
         this.driver = driver;
@@ -41,7 +48,7 @@ public class PersonnalDetails {
         js.executeScript("window.scrollTo(0, document.body.scrollHeight / 3)");
         wait.until(ExpectedConditions.elementToBeClickable(birthday));
         log.info("Enter Date of birth");
-        birthday.sendKeys(("1989-11-03"));
+        birthday.sendKeys(("03-11-1989"));
 
         return this;
     }
@@ -53,19 +60,20 @@ public class PersonnalDetails {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("oxd-form-loader")));
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@value='1']")));
         log.info("Select Genre");
-        genre.click();
+        genreMale.click();
         return this;
     }
 
     public PersonnalDetails saveInfo() {
-
+        wait.until(ExpectedConditions.elementToBeClickable(saveInfo));
+        saveInfo.click();
         return this;
     }
 
     public PersonnalDetails selectBlood() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight / 3)");
-       // js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        // js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("oxd-form-loader")));
 
         wait.until(ExpectedConditions.elementToBeClickable(blood));
@@ -82,6 +90,12 @@ public class PersonnalDetails {
         return this;
     }
 
+    public PersonnalDetails saveBlood() {
+        wait.until(ExpectedConditions.elementToBeClickable(saveBloodButton));
+        saveBloodButton.click();
+        return this;
+    }
+
     public PersonnalDetails refrechPage() {
         driver.navigate().refresh();
 
@@ -92,6 +106,37 @@ public class PersonnalDetails {
             e.printStackTrace();
         }
 
+        return this;
+    }
+
+    public PersonnalDetails verifySavedInformation() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight / 3)");
+        wait.until(ExpectedConditions.elementToBeClickable(birthday));
+        String savedDateOfBirth = birthday.getAttribute("value");
+        try {
+            Assert.assertEquals(savedDateOfBirth, "03-11-1989");
+            log.info("Date of Birth matches the expected value.");
+        } catch (AssertionError e) {
+            log.error("Assertion Error: Date of Birth doesn't match the expected value.");
+            throw e; // Rethrow the assertion error to mark the test as failed
+        }
+
+        //wait.until(ExpectedConditions.elementToBeClickable(genreMaleselect));
+        boolean isMaleRadioButtonSelected = genreMaleselect.isSelected();
+        try {
+            Assert.assertTrue(isMaleRadioButtonSelected);
+            log.info("The Male radio button is selected.");
+        } catch (AssertionError e) {
+            log.error("Error: The Male radio button is not selected.");
+            throw e; // Rethrow the assertion error to mark the test as failed
+        }
+
+
+
+
+        //Assert.assertEquals(savedGender, "Male");
+        //Assert.assertEquals(savedBloodType, getRandomBloodType());
         return this;
     }
 

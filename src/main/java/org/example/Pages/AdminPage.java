@@ -30,6 +30,8 @@ public class AdminPage {
     WebElement profilButtom;
     @FindBy(css="a[href*='logout']")
     WebElement logout;
+    @FindBy(xpath = "//div[@class='oxd-select-option']//span[text()='Admin']")
+    WebElement adminOption;
     public AdminPage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -61,7 +63,8 @@ public class AdminPage {
         wait.until(ExpectedConditions.visibilityOf(dropdown));
         log.info("click on user Roles");
         dropdown.click();
-        WebElement adminOption = driver.findElement(By.xpath("//div[@class='oxd-select-option']//span[text()='Admin']"));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("oxd-form-loader")));
+        wait.until(ExpectedConditions.visibilityOf(adminOption));
         log.info("Clicked on the 'Admin' option");
         adminOption.click();
 

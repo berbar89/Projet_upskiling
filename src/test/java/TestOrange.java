@@ -6,20 +6,29 @@ import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.github.javafaker.Faker;
 import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.core.config.Order;
+import org.apache.commons.io.FileUtils;
 import org.example.Pages.LoginPage;
-import org.openqa.selenium.JavascriptExecutor;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.ITestResult;
 import org.testng.annotations.Test;
 import org.testng.annotations.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import org.json.simple.parser.ParseException;
+
 
 @Log4j2
 
-public class TestOpenSourceDemo {
+public class TestOrange {
     Faker faker = new Faker();
     String usernameA = faker.name().username();
     WebDriver driver;
@@ -28,6 +37,8 @@ public class TestOpenSourceDemo {
     public static final String URL = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
     private ExtentReports extent;
     private ExtentTest extentTest;
+    JSONParser parser;
+    JSONObject testData;
 
     @BeforeTest
     public void setUp() {
@@ -52,6 +63,7 @@ public class TestOpenSourceDemo {
 
     @Test(priority = 1)
     private void testCreationApim() {
+
         extentTest = extent.createTest("cas de test: cration PIM", "");
         //test.pass("Step 1: Opened the browser");
         LoginPage lp = new LoginPage(driver);
@@ -112,26 +124,49 @@ public class TestOpenSourceDemo {
                 .createUser()
                 .birth()
                 .selectGenre()
+                .saveInfo()
                 .selectBlood()
-                .refrechPage();
+                .saveBlood()
+                .refrechPage()
+                .verifySavedInformation();
 
     }
 
-    @Test
-   /* public void testFeuilleTempProjet() {
+    @Test(priority = 4)
+
+    public void testFeuilleTempProjet() {
+        extentTest = extent.createTest("cas de test: Feuille de temps du projet ", "");
         LoginPage lp = new LoginPage(driver);
         lp.inputUserName(username)
                 .inputPassword(password)
                 .clickLogin()
-                .doToTime();
+                .doToTime()
+                .clickReport()
+                .goToProjectReport()
+                .selectProject();
+        //.clickViewButtom();
     }
-*/
-  /*  @AfterMethod
-    public void TeardownM() {
-        log.info("Finishing test");
-        driver.quit();
+
+    @AfterMethod
+    public void captureScreen(ITestResult result) {
+        if (result.getStatus() == ITestResult.FAILURE) {
+            File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            String name = "screenshot.png";
+// Now you can do whatever you need to do with it, for example copy somewhere
+            try {
+                FileUtils.copyFile(scrFile, new File("test-output/screenshots/" + name));
+            } catch (IOException e) {
+                log.error("screenshot failed");
+                throw new RuntimeException(e);
+            }
+        }
     }
-*/
+
+    /*  @AfterMethod
+      public void TeardownM() {
+          log.info("Finishing test");
+          driver.quit();
+      }*/
     @AfterMethod
 
     public void tearDownwM(ITestResult result) {
@@ -147,7 +182,7 @@ public class TestOpenSourceDemo {
         }
 
         // Fermer le navigateur
-         driver.quit();
+        //driver.quit();
 
         // Finir le rapport
         extent.flush();

@@ -1,0 +1,10 @@
+{
+  "Admin": {
+    "firstname": "Default Admin",
+    "lastname": "Admin",
+    "user": {
+      "username": "Admin",
+      "password": "admin123"
+    }
+  }
+}
