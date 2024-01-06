@@ -15,7 +15,7 @@ public class TimePage {
     WebDriver driver;
     WebDriverWait wait;
     @FindBy(xpath = "//span[contains(text(),'Reports')]")
-    WebElement reportButtom;
+    WebElement reportButton;
     @FindBy(xpath = "//a[text()='Project Reports']")
     WebElement reportProjectButtom;
 
@@ -27,13 +27,15 @@ public class TimePage {
     }
 
     public TimePage clickReport() {
-        wait.until(ExpectedConditions.visibilityOf(reportButtom));
-        reportButtom.click();
+        wait.until(ExpectedConditions.visibilityOf(reportButton));
+        log.info("click on report button ");
+        reportButton.click();
         return this;
     }
 
     public ReportProject goToProjectReport() {
         wait.until(ExpectedConditions.visibilityOf(reportProjectButtom));
+        log.info("click on report project button ");
         reportProjectButtom.click();
         return new ReportProject(driver);
 

@@ -20,6 +20,15 @@ public class DashboardPage {
     WebElement adminButton;
     @FindBy(css="a[href*='viewTimeModule']")
     WebElement TimeButton;
+    @FindBy(className= "oxd-userdropdown-name")
+    WebElement profilName;
+
+
+    public String getNameProfil(){
+        log.info("Getting Tittle");
+        wait.until(ExpectedConditions.visibilityOfAllElements(profilName));
+        return profilName.getText();
+    }
     public DashboardPage(WebDriver driver){
         this.driver= driver;
         PageFactory.initElements(driver, this);

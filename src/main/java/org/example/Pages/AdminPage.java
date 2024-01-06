@@ -21,17 +21,18 @@ public class AdminPage {
     @FindBy(xpath = "//label[text()='Username']/ancestor::div[@data-v-957b4417]/div/input")
     WebElement userNameField;
     @FindBy(className = "bi-pencil-fill")
-    WebElement modifybuttom ;
+    WebElement modifybuttom;
     @FindBy(xpath = "//label[text()= 'User Role']/ancestor::div[@data-v-957b4417]/div/div")
     WebElement dropdown;
     @FindBy(xpath = "//button[@class='oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space']")
     WebElement saveButtom;
     @FindBy(css = ".oxd-userdropdown-icon")
     WebElement profilButtom;
-    @FindBy(css="a[href*='logout']")
+    @FindBy(css = "a[href*='logout']")
     WebElement logout;
     @FindBy(xpath = "//div[@class='oxd-select-option']//span[text()='Admin']")
     WebElement adminOption;
+
     public AdminPage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -51,14 +52,17 @@ public class AdminPage {
         log.info("Entering search text: {}", searchText);
         userNameField.sendKeys(searchText);
         userNameField.sendKeys(Keys.RETURN);
+        log.info("Person found in search results.");
         return this;
     }
-    public AdminPage ModifyEmployee(){
+
+    public AdminPage ModifyEmployee() {
         wait.until(ExpectedConditions.visibilityOf(modifybuttom));
         modifybuttom.click();
         return this;
     }
-    public AdminPage selectAdminOption(){
+
+    public AdminPage selectAdminOption() {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("oxd-form-loader")));
         wait.until(ExpectedConditions.visibilityOf(dropdown));
         log.info("click on user Roles");
@@ -70,10 +74,12 @@ public class AdminPage {
 
         return this;
     }
-    public AdminPage clickSaveButtom(){
+
+    public AdminPage clickSaveButtom() {
         wait.until(ExpectedConditions.visibilityOf(saveButtom));
         log.info("Clicked on the 'Save' button");
         saveButtom.click();
+// Ajouter une pause de 5 secondes (5000 millisecondes) pour que la MAJ s'effectue
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -82,14 +88,15 @@ public class AdminPage {
         return this;
     }
 
-    public AdminPage clickProfil(){
+    public AdminPage clickProfil() {
         wait.until(ExpectedConditions.visibilityOf(profilButtom));
         log.info("click on profil buttom");
         profilButtom.click();
         return this;
 
     }
-    public LoginPage logout(){
+
+    public LoginPage logout() {
         wait.until(ExpectedConditions.visibilityOf(logout));
         log.info("click on logout buttom");
         logout.click();

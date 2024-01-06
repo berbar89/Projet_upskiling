@@ -8,12 +8,14 @@ import com.github.javafaker.Faker;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
 import org.example.Pages.LoginPage;
+import org.example.Pages.PersonnalDetails;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.Test;
 import org.testng.annotations.*;
@@ -39,6 +41,8 @@ public class TestOrange {
     private ExtentTest extentTest;
     JSONParser parser;
     JSONObject testData;
+    String gender="M";
+
 
     @BeforeTest
     public void setUp() {
@@ -62,24 +66,27 @@ public class TestOrange {
     }
 
     @Test(priority = 1)
-    private void testCreationApim() {
-
+    public void testCreationApim() {
         extentTest = extent.createTest("cas de test: cration PIM", "");
         //test.pass("Step 1: Opened the browser");
+        String expectedTitle = "Personal Details";
         LoginPage lp = new LoginPage(driver);
-        lp.inputUserName(username)
+        String ActualTitle = lp.inputUserName(username)
                 .inputPassword(password)
                 .clickLogin()
                 .gotoPIM()
                 .clickAddButton()
-                .inputFirstName("Nassim")
+                .inputFirstName("Nassima")
                 .inputMiddleName("Nas")
-                .inputLastName("AAAkk")
+                .inputLastName("berbar")
                 .clickCreateLoginDetails()
                 .inputNewUsername("ikk.nassima")
                 .inputNPassword("Aydennnn1n")
                 .inputconfirmPassword("Aydennnn1n")
-                .createUser();
+                .createUser()
+                .getTitle();
+
+        Assert.assertEquals(ActualTitle, expectedTitle);
 
 
     }
@@ -89,7 +96,7 @@ public class TestOrange {
     public void testCreateAdmin() {
         extentTest = extent.createTest("cas de test: cration admin", "");
         LoginPage lp = new LoginPage(driver);
-        lp.inputUserName(username)
+        String profilNameActual = lp.inputUserName(username)
                 .inputPassword(password)
                 .clickLogin()
                 .goToAdmin()
@@ -101,7 +108,9 @@ public class TestOrange {
                 .logout()
                 .inputUserName("ikk.nassima")
                 .inputPassword("Aydennnn1n")
-                .clickLogin();
+                .clickLogin()
+                .getNameProfil();
+        Assert.assertEquals(profilNameActual, "Nassima berbar");
 
     }
 
@@ -109,7 +118,7 @@ public class TestOrange {
     public void testRemplirFormulaire() {
         extentTest = extent.createTest("cas de test: Remplissage de formulaire", "");
         LoginPage lp = new LoginPage(driver);
-        lp.inputUserName(username)
+        PersonnalDetails EmployeeDetails= lp.inputUserName(username)
                 .inputPassword(password)
                 .clickLogin()
                 .gotoPIM()
@@ -122,13 +131,39 @@ public class TestOrange {
                 .inputNPassword("Aydennnn1n")
                 .inputconfirmPassword("Aydennnn1n")
                 .createUser()
-                .birth()
-                .selectGenre()
+                .birth("1989-11-03")
+                .selectGenre(gender)
                 .saveInfo()
                 .selectBlood()
                 .saveBlood()
-                .refrechPage()
-                .verifySavedInformation();
+                .refrechPage();
+        try {
+            Assert.assertEquals(EmployeeDetails.getBirtdaydate(), "1989-11-03");
+            log.info("Date of Birth matches the expected value.");
+        } catch (AssertionError e) {
+            log.error("Assertion Error: Date of Birth doesn't match the expected value.");
+            throw e; // Rethrow the assertion error to mark the test as failed
+        }
+        if(gender.equals("M")) {
+            try {
+                Assert.assertTrue(EmployeeDetails.isMaleSelected());
+                log.info("The Male radio button is selected.");
+            } catch (AssertionError e) {
+                log.error("Error: The Male radio button is not selected.");
+                throw e; // Rethrow the assertion error to mark the test as failed
+            }
+        }
+            else {
+                try {
+                    Assert.assertTrue(EmployeeDetails.isFemalealeSelected());
+                    log.info("The Female radio button is selected.");
+                } catch (AssertionError e) {
+                    log.error("Error: The Female radio button is not selected.");
+                    throw e; // Rethrow the assertion error to mark the test as failed
+                }
+
+            }
+            Assert.assertNotNull(EmployeeDetails.getBloodValue());
 
     }
 
