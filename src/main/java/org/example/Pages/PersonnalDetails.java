@@ -42,6 +42,8 @@ public class PersonnalDetails {
     WebElement saveInfo;
     @FindBy(css = ".oxd-button--secondary:nth-child(1)")
     WebElement saveBloodButton;
+    @FindBy(css="button[data-v-10d463b7][data-v-3dab643a]")
+    WebElement attachementButton;
 
 
     public PersonnalDetails(WebDriver driver) {
@@ -156,6 +158,7 @@ public class PersonnalDetails {
         log.info(" getting blood value ");
         return blood.getText();
     }
+
 
 
 }

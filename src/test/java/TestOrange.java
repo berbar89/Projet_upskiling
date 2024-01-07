@@ -5,6 +5,8 @@ import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.github.javafaker.Faker;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
 import org.example.Pages.LoginPage;
@@ -20,12 +22,11 @@ import org.testng.ITestResult;
 import org.testng.annotations.Test;
 import org.testng.annotations.*;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
-import org.json.simple.parser.ParseException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
 
 @Log4j2
@@ -34,14 +35,15 @@ public class TestOrange {
     Faker faker = new Faker();
     String usernameA = faker.name().username();
     WebDriver driver;
-    String username = "admin";
-    String password = "admin123";
+ //   String username = "admin";
+ //   String password = "admin123";
     public static final String URL = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
     private ExtentReports extent;
     private ExtentTest extentTest;
     JSONParser parser;
     JSONObject testData;
     String gender="M";
+    String file= "src/main/resources/Json/Data.json";
 
 
     @BeforeTest
@@ -64,25 +66,39 @@ public class TestOrange {
         log.info("Navigated to the URL: https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
         driver.get(URL);
     }
+    public JsonObject readJsonFile(String filePath) {
+        try {
 
-    @Test(priority = 1)
-    public void testCreationApim() {
+            JsonParser jsonParser = new JsonParser();
+            return jsonParser.parse(new InputStreamReader(new FileInputStream(filePath), "UTF-8")).getAsJsonObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    @Test
+    public void testCreationApim()  {
+
+            JsonObject adminObject = readJsonFile(file)
+                    .getAsJsonObject("Admin");
+            JsonObject pimUserAdmin=readJsonFile(file)
+                    .getAsJsonObject("UserPimAdmin");
         extentTest = extent.createTest("cas de test: cration PIM", "");
         //test.pass("Step 1: Opened the browser");
         String expectedTitle = "Personal Details";
         LoginPage lp = new LoginPage(driver);
-        String ActualTitle = lp.inputUserName(username)
-                .inputPassword(password)
+        String ActualTitle = lp.inputUserName(adminObject.get("username").getAsString())
+                .inputPassword(adminObject.get("password").getAsString())
                 .clickLogin()
                 .gotoPIM()
                 .clickAddButton()
-                .inputFirstName("Nassima")
-                .inputMiddleName("Nas")
-                .inputLastName("berbar")
+                .inputFirstName(pimUserAdmin.get("firstname").getAsString())
+                .inputMiddleName(pimUserAdmin.get("middlename").getAsString())
+                .inputLastName(pimUserAdmin.get("lastname").getAsString())
                 .clickCreateLoginDetails()
-                .inputNewUsername("ikk.nassima")
-                .inputNPassword("Aydennnn1n")
-                .inputconfirmPassword("Aydennnn1n")
+                .inputNewUsername(pimUserAdmin.get("username").getAsString())
+                .inputNPassword(pimUserAdmin.get("password").getAsString())
+                .inputconfirmPassword(pimUserAdmin.get("confirmPassword").getAsString())
                 .createUser()
                 .getTitle();
 
@@ -91,48 +107,56 @@ public class TestOrange {
 
     }
 
-
     @Test(priority = 2)
     public void testCreateAdmin() {
+        JsonObject adminObject = readJsonFile(file)
+                .getAsJsonObject("Admin");
+        JsonObject pimUserAdmin=readJsonFile(file)
+                .getAsJsonObject("UserPimAdmin");
         extentTest = extent.createTest("cas de test: cration admin", "");
         LoginPage lp = new LoginPage(driver);
-        String profilNameActual = lp.inputUserName(username)
-                .inputPassword(password)
+        String profilNameActual = lp.inputUserName(adminObject.get("username").getAsString())
+                .inputPassword(adminObject.get("password").getAsString())
                 .clickLogin()
                 .goToAdmin()
-                .searchEmployee()
+                .searchEmployee(pimUserAdmin.get("username").getAsString())
                 .ModifyEmployee()
                 .selectAdminOption()
                 .clickSaveButtom()
                 .clickProfil()
                 .logout()
-                .inputUserName("ikk.nassima")
-                .inputPassword("Aydennnn1n")
+                .inputUserName(pimUserAdmin.get("username").getAsString())
+                .inputPassword(pimUserAdmin.get("password").getAsString())
                 .clickLogin()
                 .getNameProfil();
-        Assert.assertEquals(profilNameActual, "Nassima berbar");
+        Assert.assertEquals(profilNameActual, "Nassima Berbar");
 
     }
 
-    @Test(priority = 3)
+   @Test(priority = 3)
     public void testRemplirFormulaire() {
+       JsonObject pimUser=readJsonFile(file)
+               .getAsJsonObject("UserPim");
+       JsonObject pimUserAdmin=readJsonFile(file)
+               .getAsJsonObject("UserPimAdmin");
+
         extentTest = extent.createTest("cas de test: Remplissage de formulaire", "");
         LoginPage lp = new LoginPage(driver);
-        PersonnalDetails EmployeeDetails= lp.inputUserName(username)
-                .inputPassword(password)
+        PersonnalDetails EmployeeDetails= lp.inputUserName(pimUserAdmin.get("username").getAsString())
+                .inputPassword(pimUserAdmin.get("password").getAsString())
                 .clickLogin()
                 .gotoPIM()
                 .clickAddButton()
-                .inputFirstName("Nassim")
-                .inputMiddleName("Nas")
-                .inputLastName("AAAkk")
+                .inputFirstName(pimUser.get("firstname").getAsString())
+                .inputMiddleName(pimUser.get("middlename").getAsString())
+                .inputLastName(pimUser.get("lastname").getAsString())
                 .clickCreateLoginDetails()
-                .inputNewUsername(usernameA)
-                .inputNPassword("Aydennnn1n")
-                .inputconfirmPassword("Aydennnn1n")
+                .inputNewUsername(pimUser.get("username").getAsString())
+                .inputNPassword(pimUser.get("password").getAsString())
+                .inputconfirmPassword(pimUser.get("confirmPassword").getAsString())
                 .createUser()
-                .birth("1989-11-03")
-                .selectGenre(gender)
+                .birth(pimUser.get("birthday").getAsString())
+                .selectGenre(pimUser.get("gender").getAsString())
                 .saveInfo()
                 .selectBlood()
                 .saveBlood()
@@ -168,12 +192,14 @@ public class TestOrange {
     }
 
     @Test(priority = 4)
-
     public void testFeuilleTempProjet() {
+        JsonObject pimUserAdmin=readJsonFile(file)
+                .getAsJsonObject("UserPimAdmin");
+
         extentTest = extent.createTest("cas de test: Feuille de temps du projet ", "");
         LoginPage lp = new LoginPage(driver);
-        lp.inputUserName(username)
-                .inputPassword(password)
+        lp.inputUserName(pimUserAdmin.get("username").getAsString())
+                .inputPassword(pimUserAdmin.get("password").getAsString())
                 .clickLogin()
                 .doToTime()
                 .clickReport()
@@ -197,13 +223,8 @@ public class TestOrange {
         }
     }
 
-    /*  @AfterMethod
-      public void TeardownM() {
-          log.info("Finishing test");
-          driver.quit();
-      }*/
-    @AfterMethod
 
+    @AfterMethod
     public void tearDownwM(ITestResult result) {
         // Gérer le statut du test (réussite/échec)
         if (result.getStatus() == ITestResult.FAILURE) {

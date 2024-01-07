@@ -1,10 +1,24 @@
 {
   "Admin": {
-    "firstname": "Default Admin",
-    "lastname": "Admin",
-    "user": {
-      "username": "Admin",
-      "password": "admin123"
-    }
+    "username": "Admin",
+    "password": "admin123"
+  },
+  "UserPimAdmin": {
+    "firstname": "Nassima",
+    "middlename": "Berbar",
+    "lastname": "Berbar",
+    "username": "berbar.nassima",
+    "password": "Ayden123",
+    "confirmPassword": "Ayden123"
+  },
+  "UserPim": {
+    "firstname": "Nassima",
+    "middlename": "IKKEN",
+    "lastname": "IKKENs",
+    "username": "ikken.nassima",
+    "password": "Ayden123",
+    "confirmPassword": "Ayden123",
+    "birthday": "1989-11-03",
+    "gender": "M"
   }
 }

@@ -46,11 +46,11 @@ public class AdminPage {
         return this;
     }
 
-    public AdminPage searchEmployee() {
-        String searchText = "ikk.nassima";
+    public AdminPage searchEmployee(String user) {
+       // String searchText = "ikk.nassima";
         wait.until(ExpectedConditions.visibilityOf(userNameField));
-        log.info("Entering search text: {}", searchText);
-        userNameField.sendKeys(searchText);
+        log.info("Entering search text: {}",user);
+        userNameField.sendKeys(user);
         userNameField.sendKeys(Keys.RETURN);
         log.info("Person found in search results.");
         return this;

@@ -51,7 +51,7 @@ public class ReportProject {
                 e.printStackTrace();
             }
             WebElement premierElement = driver.findElement(By.cssSelector("div.oxd-autocomplete-dropdown div"));
-            log.info("select project: " +Element);
+            log.info("select project: " + Element);
             premierElement.click();
             log.info("click on view buttom");
             wait.until(ExpectedConditions.visibilityOf(viewButtom));
@@ -81,8 +81,6 @@ public class ReportProject {
             }
 
         }
-
-
         return this;
     }
 
