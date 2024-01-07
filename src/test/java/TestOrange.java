@@ -17,6 +17,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.Test;
@@ -32,17 +33,11 @@ import java.io.InputStreamReader;
 @Log4j2
 
 public class TestOrange {
-    Faker faker = new Faker();
-    String usernameA = faker.name().username();
+
     WebDriver driver;
- //   String username = "admin";
- //   String password = "admin123";
     public static final String URL = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
-    private ExtentReports extent;
-    private ExtentTest extentTest;
-    JSONParser parser;
-    JSONObject testData;
-    String gender="M";
+    public ExtentReports extent;
+   public ExtentTest extentTest;
     String file= "src/main/resources/Json/Data.json";
 
 
@@ -168,7 +163,7 @@ public class TestOrange {
             log.error("Assertion Error: Date of Birth doesn't match the expected value.");
             throw e; // Rethrow the assertion error to mark the test as failed
         }
-        if(gender.equals("M")) {
+        if(pimUser.get("gender").getAsString().equals("M")) {
             try {
                 Assert.assertTrue(EmployeeDetails.isMaleSelected());
                 log.info("The Male radio button is selected.");
