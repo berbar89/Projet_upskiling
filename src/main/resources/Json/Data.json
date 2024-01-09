@@ -20,5 +20,13 @@
     "confirmPassword": "Ayden123",
     "birthday": "1989-11-03",
     "gender": "F"
+  },
+  "UserPim2": {
+    "firstname": "test",
+    "middlename": "test",
+    "lastname": "test",
+    "username": "test.test",
+    "password": "Ayden123",
+    "confirmPassword": "Ayden123"
   }
 }

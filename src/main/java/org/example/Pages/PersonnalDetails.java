@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.List;
 import java.util.Random;
@@ -42,8 +43,14 @@ public class PersonnalDetails {
     WebElement saveInfo;
     @FindBy(css = ".oxd-button--secondary:nth-child(1)")
     WebElement saveBloodButton;
-    @FindBy(css="button[data-v-10d463b7][data-v-3dab643a]")
+    @FindBy(css = "button[data-v-10d463b7][data-v-3dab643a]")
     WebElement attachementButton;
+    @FindBy(css="input.oxd-file-input[type=\"file\"]")
+    WebElement uploadFileInputLocator;
+    @FindBy(css="button.oxd-button--medium:nth-of-type(2)")
+    WebElement saveUploadButton;
+    @FindBy(css="div.oxd-table>div.oxd-table-body>div>div>div.oxd-table-cell:nth-child(2)")
+    WebElement nameFile;
 
 
     public PersonnalDetails(WebDriver driver) {
@@ -159,6 +166,33 @@ public class PersonnalDetails {
         return blood.getText();
     }
 
+    public PersonnalDetails clickUploadButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(attachementButton));
+        log.info("click on upload button.");
+        attachementButton.click();
+        log.info("Upload button clicked.");
+        return this;
+    }
 
+    public PersonnalDetails uploadFile(String file) {
+        log.info("Uploading file");
+        File fileob = new File(file);
+        uploadFileInputLocator.sendKeys(fileob.getAbsolutePath());
+        return this;
+
+    }
+    public PersonnalDetails clickButtonSaveUploadFile() {
+        log.info("Click on save upload button");
+        wait.until(ExpectedConditions.elementToBeClickable(saveUploadButton));
+        saveUploadButton.click();
+        return this;
+
+    }
+    public String getNameFile() {
+        log.info("Get name of the File ...");
+        wait.until(ExpectedConditions.visibilityOf(nameFile));
+        String fileName = nameFile.getText();
+        return fileName;
+    }
 
 }
