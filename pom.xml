@@ -79,7 +79,30 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>7.14.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
+            <version>7.14.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-testng -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>7.14.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/net.rcarz/jira-client -->
 
+        <!-- https://mvnrepository.com/artifact/app.getxray/xray-testng-extensions -->
+        <dependency>
+            <groupId>app.getxray</groupId>
+            <artifactId>xray-testng-extensions</artifactId>
+            <version>0.1.0</version>
+        </dependency>
     </dependencies>
     <build>
         <pluginManagement>
@@ -110,4 +133,14 @@
         </plugins>
 
     </build>
+    <repositories>
+        <repository>
+            <id>xpandit</id>
+            <name>xpand-releases</name>
+            <url>http://maven.xpand-it.com/artifactory/releases</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
 </project>

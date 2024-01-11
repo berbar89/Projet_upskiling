@@ -63,6 +63,9 @@ public class PersonnalDetails {
         log.info("Getting Tittle");
         return title.getText();
     }
+    public void checkPageTitle(String titre){
+        Assert.assertEquals(getTitle(), titre);
+    }
 
     public PersonnalDetails birth(String birthdate) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -194,5 +197,7 @@ public class PersonnalDetails {
         String fileName = nameFile.getText();
         return fileName;
     }
+
+
 
 }
