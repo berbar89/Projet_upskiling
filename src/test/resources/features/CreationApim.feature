@@ -12,8 +12,12 @@ Feature: Creation_User
     And je renseigne un firstname "<firstname>"
     And je renseigne un middlename "<middlename>"
     And je renseigne un lastname "<lastname>"
+    And je clique sur le bouton Create Login Details
+    And je renseigne un UserNameApim "<user>"
+    And je renseigne un psw "<pws>"
+    And je renseigne un confirmpsw "<confirmpws>"
     When je click sur le bouton save
     Then la page Personal Details saffiche "<titre>"
     Examples:
-      | username | password | firstname | middlename | lastname | titre            |
-      | Admin    | admin123 | test      | test       | test     | Personal Details |
+      | username | password | firstname | middlename | lastname | titre            | user    | pws     | confirmpws |
+      | Admin    | admin123 | test      | test       | test     | Personal Details | Nassima | user123 | user123    |

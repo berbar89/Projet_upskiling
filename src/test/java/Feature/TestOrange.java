@@ -6,15 +6,12 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import com.github.javafaker.Faker;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
 import org.example.Pages.LoginPage;
 import org.example.Pages.PersonnalDetails;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -26,7 +23,6 @@ import org.testng.annotations.Test;
 import org.testng.annotations.*;
 
 import java.io.*;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -54,12 +50,12 @@ public class TestOrange {
     public void setUpM() {
         System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
         // Configurez les options pour le mode headless
-        FirefoxOptions options = new FirefoxOptions();
+        /*FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--headless");
 
         // Instanciez le WebDriver avec les options
-        driver = new FirefoxDriver(options);
-       // driver = new FirefoxDriver();
+        driver = new FirefoxDriver(options);*/
+        driver = new FirefoxDriver();
         log.info("Navigated to the URL: https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
         driver.get(URL);
     }
@@ -77,7 +73,7 @@ public class TestOrange {
 
     @Test(priority = 1)
     public void testCreationApim() {
-        JsonObject admin= readJsonFile(file)
+        JsonObject admin = readJsonFile(file)
                 .getAsJsonObject("Admin");
         JsonObject pimUserAdmin = readJsonFile(file)
                 .getAsJsonObject("UserPimAdmin");
@@ -161,7 +157,7 @@ public class TestOrange {
                 .saveBlood()
                 .refrechPage();
         try {
-            Assert.assertEquals( "1989-11-03", EmployeeDetails.getBirtdaydate());
+            Assert.assertEquals("1989-11-03", EmployeeDetails.getBirtdaydate());
             log.info("Date of Birth matches the expected value.");
         } catch (AssertionError e) {
             log.error("Assertion Error: Date of Birth doesn't match the expected value.");
@@ -211,12 +207,12 @@ public class TestOrange {
 
         JsonObject pimUserAdmin = readJsonFile(file)
                 .getAsJsonObject("UserPimAdmin");
-        JsonObject pimUser2= readJsonFile(file)
+        JsonObject pimUser2 = readJsonFile(file)
                 .getAsJsonObject("UserPim2");
         extentTest = extent.createTest("cas de test: Upload de document", "");
         String expected = "panda.jpg";
         LoginPage lp = new LoginPage(driver);
-        PersonnalDetails namefile= lp.inputUserName(pimUserAdmin.get("username").getAsString())
+        PersonnalDetails namefile = lp.inputUserName(pimUserAdmin.get("username").getAsString())
                 .inputPassword(pimUserAdmin.get("password").getAsString())
                 .clickLogin()
                 .gotoPIM()
@@ -251,7 +247,6 @@ public class TestOrange {
         }
     }
 
-
     @AfterMethod
     public void tearDownwM(ITestResult result) {
         // Gérer le statut du test (réussite/échec)
@@ -266,7 +261,7 @@ public class TestOrange {
         }
 
         // Fermer le navigateur
-        //driver.quit();
+        driver.quit();
 
         // Finir le rapport
         extent.flush();

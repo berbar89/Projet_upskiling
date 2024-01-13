@@ -51,7 +51,7 @@ public class CreationApimSteps {
 
     }
     @And("je renseigne un firstname {string}")
-    public void jentreUserName(String userName) {
+    public void jentreFirstName(String userName) {
         pagePim.inputFirstName(userName);
 
     }
@@ -65,12 +65,35 @@ public class CreationApimSteps {
         pagePim.inputLastName(lastName);
 
     }
+    @And("je clique sur le bouton Create Login Details")
+    public void cliqueCreateLoginButton() {
+        pagePim.clickCreateLoginDetails();
+
+    }
+
+    @And("je renseigne un UserNameApim {string}")
+    public void jentreUserName(String user ) {
+        pagePim.inputNewUsername(user);
+
+    }
+    @And("je renseigne un psw {string}")
+    public void jentrePsw(String psw) {
+        pagePim.inputNPassword(psw);
+
+    }
+    @And("je renseigne un confirmpsw {string}")
+    public void jentreConfirmPsw(String Cpsw) {
+        pagePim.inputconfirmPassword(Cpsw);
+
+    }
     @And("je click sur le bouton save")
     public PersonnalDetails cliqueSaveButton() {
        detailPersonne= pagePim.createUser();
        return detailPersonne;
 
     }
+
+
 
     @Then("la page Personal Details saffiche {string}")
     public void goToPersonnalDetails(String t) {
