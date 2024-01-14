@@ -50,12 +50,12 @@ public class TestOrange {
     public void setUpM() {
         System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
         // Configurez les options pour le mode headless
-        /*FirefoxOptions options = new FirefoxOptions();
+        FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--headless");
 
         // Instanciez le WebDriver avec les options
-        driver = new FirefoxDriver(options);*/
-        driver = new FirefoxDriver();
+        driver = new FirefoxDriver(options);
+        //driver = new FirefoxDriver();
         log.info("Navigated to the URL: https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
         driver.get(URL);
     }
