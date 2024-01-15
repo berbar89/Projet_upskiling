@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="1" name="Surfire suite" verbose="0">
+    <listeners>
+        <listener class-name="com.xpandit.testng.annotations.XrayListener"></listener>
+    </listeners>
+    <test thread-count="1" name="Surefire test" verbose="0">
+        <classes>
+            <class name="Feature.TestOrange"></class>
+        </classes>
+    </test>
+    
+</suite>

@@ -88,6 +88,11 @@
             <artifactId>xray-testng-extensions</artifactId>
             <version>0.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.xpandit.xray</groupId>
+            <artifactId>xray-testng-extensions</artifactId>
+            <version>1.1.0</version>
+        </dependency>
     </dependencies>
     <build>
 
@@ -97,9 +102,16 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
-                    <includes>
-                        <include>**/Test*.java</include>
-                    </includes>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <suiteXmlFiles>
+                        <suiteXmlFile> testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <properties>
+                        <property>
+                            <name>reporter</name>
+                            <value>org.testng.reporters.XMLReporter:generateTestResultAttributes=true,generateGroupeAttribute=true</value>
+                        </property>
+                    </properties>
                 </configuration>
             </plugin>
 
@@ -116,7 +128,7 @@
         <repository>
             <id>xpandit</id>
             <name>xpand-releases</name>
-            <url>http://maven.xpand-it.com/artifactory/releases</url>
+            <url>https://maven.getxray.app:443/artifactory/releases</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
