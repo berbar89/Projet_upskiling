@@ -73,7 +73,7 @@ public class TestOrange {
     }
 
     @Test(priority = 1)
-    @Xray (requirement="OrangeHRM", test="OR-8")
+    @Xray (requirement="OR-1", test="OR-8")
     public void testCreationApim() {
         JsonObject admin = readJsonFile(file)
                 .getAsJsonObject("Admin");
