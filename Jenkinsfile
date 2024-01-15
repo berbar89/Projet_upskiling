@@ -1,10 +1,3 @@
-pipeline {
-    agent any
-
-    tools {
-        // Installation Maven selon le nom donné dans la configuration globale de Jenkins
-        maven "Maven"
-    }
 
     stages {
 
