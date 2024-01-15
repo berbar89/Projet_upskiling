@@ -83,7 +83,7 @@ public class TestOrange {
         //test.pass("Step 1: Opened the browser");
         String expectedTitle = "Personal Details";
         LoginPage lp = new LoginPage(driver);
-        lp.inputUserName(admin.get("username").getAsString())
+        String ActualTitle= lp.inputUserName(admin.get("username").getAsString())
                 .inputPassword(admin.get("password").getAsString())
                 .clickLogin()
                 .gotoPIM()
@@ -95,16 +95,17 @@ public class TestOrange {
                 .inputNewUsername(pimUserAdmin.get("username").getAsString())
                 .inputNPassword(pimUserAdmin.get("password").getAsString())
                 .inputconfirmPassword(pimUserAdmin.get("confirmPassword").getAsString())
-                .createUser();
-                //.getTitle();
+                .createUser()
+                .getTitle();
 
 
-      //  Assert.assertEquals(expectedTitle, ActualTitle);
+       Assert.assertEquals(expectedTitle, ActualTitle);
 
 
     }
 
-  /*  @Test(priority = 2)
+  @Test(priority = 2)
+  @Xray (requirement="OR-1", test="OR-9")
     public void testCreateAdmin() {
         JsonObject adminObject = readJsonFile(file)
                 .getAsJsonObject("Admin");
@@ -131,6 +132,7 @@ public class TestOrange {
     }
 
     @Test(priority = 3)
+    @Xray (requirement="OR-1", test="OR-10")
     public void testRemplirFormulaire() {
         JsonObject pimUser = readJsonFile(file)
                 .getAsJsonObject("UserPim");
@@ -188,6 +190,7 @@ public class TestOrange {
     }
 
     @Test(priority = 4)
+    @Xray (requirement="OR-1", test="OR-11")
     public void testFeuilleTempProjet() {
         JsonObject pimUserAdmin = readJsonFile(file)
                 .getAsJsonObject("UserPimAdmin");
@@ -205,6 +208,7 @@ public class TestOrange {
     }
 
     @Test(priority = 5)
+    @Xray (requirement="OR-1", test="OR-12")
     public void testUploadDodument() {
 
         JsonObject pimUserAdmin = readJsonFile(file)
@@ -233,7 +237,7 @@ public class TestOrange {
 
         Assert.assertEquals(expected, namefile.getNameFile());
     }
-*/
+
     @AfterMethod
     public void captureScreen(ITestResult result) {
         if (result.getStatus() == ITestResult.FAILURE) {
