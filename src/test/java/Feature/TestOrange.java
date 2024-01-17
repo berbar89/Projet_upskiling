@@ -232,7 +232,7 @@ public class TestOrange {
                 .inputconfirmPassword(pimUser2.get("confirmPassword").getAsString())
                 .createUser()
                 .clickUploadButton()
-                .uploadFile("C:\\Users\\Public\\Documents\\formation\\Projet_upskiling\\panda.jpg")
+                .uploadFile("src/main/resources/panda.jpg")
                 .clickButtonSaveUploadFile();
 
         Assert.assertEquals(expected, namefile.getNameFile());
